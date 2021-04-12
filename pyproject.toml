@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "learning-python-responder"
+version = "0.1.0"
+description = ""
+authors = ["T.Hori <beat3526@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+responder = "^2.0.7"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
