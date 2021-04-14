@@ -48,7 +48,6 @@ def pizza_pizza(req, resp):
 # process_dataをバックグラウンドで実行しながら即時レスポンスする
 @api.route("/incoming")
 async def receive_incoming(req, resp):
-
     @api.background.task
     def process_data(data):
         f = open('./{}'.format(data['file']['filename']), 'w')
@@ -59,6 +58,23 @@ async def receive_incoming(req, resp):
     process_data(data)
 
     resp.media = {'success': True}
+
+
+# on_{HTTP Method}で対応するHTTP Methodの処理が定義できる
+# on_requestを定義した場合、未定義のものはすべてそこに振り分けられる
+@api.route("/class/{who}")
+class Class:
+    @staticmethod
+    async def on_get(req, resp, *, who):
+        resp.text = f"GET, {who}!"
+
+    @staticmethod
+    async def on_post(req, resp, *, who):
+        resp.text = f"POST, {who}!"
+
+    @staticmethod
+    async def on_request(req, resp, *, who):
+        resp.text = f"Any, {who}!"
 
 
 # Run the Server
