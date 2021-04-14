@@ -1,5 +1,6 @@
 # Declare a Web Service
 import responder
+from router.SampleRouter import Sample
 
 api = responder.API()
 
@@ -76,6 +77,9 @@ class Class:
     async def on_request(req, resp, *, who):
         resp.text = f"Any, {who}!"
 
+
+# 別ファイルのClassでルーティング
+api.add_route("/sample", Sample)
 
 # Run the Server
 if __name__ == '__main__':
