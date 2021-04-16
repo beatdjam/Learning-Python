@@ -1,23 +1,26 @@
-
-from googleads import ad_manager
-from googleads import oauth2
+from googleads import ad_manager, AdManagerClient
 import os
 
 # 認証ファイルのpathを取得
 script_dir = os.path.dirname(__file__)
-KEY_FILE = os.path.join(script_dir, 'credential.json')
-
-# Ad Manager API information.
-APPLICATION_NAME = 'sample'
+CONFIG_FILE = os.path.join(script_dir, 'googleads.yaml')
 
 
-def main(key_file, application_name):
-    oauth2_client = oauth2.GoogleServiceAccountClient(
-        key_file, oauth2.GetAPIScope('ad_manager'))
+def main():
+    ad_manager_client: AdManagerClient = ad_manager.AdManagerClient.LoadFromStorage(CONFIG_FILE)
 
-    ad_manager_client = ad_manager.AdManagerClient(
-        oauth2_client, application_name)
+    get_all_networks(ad_manager_client)
+    get_current_user(ad_manager_client)
 
+
+def get_current_user(ad_manager_client: AdManagerClient):
+    user = ad_manager_client.GetService('UserService').getCurrentUser()
+    print('User with ID %d, name "%s", email "%s", and role "%s" '
+          'is the current user.' % (
+              user.id, user.name, user.email, user.roleName))
+
+
+def get_all_networks(ad_manager_client: AdManagerClient):
     networks = ad_manager_client.GetService('NetworkService').getAllNetworks()
     for network in networks:
         print('Network with network code "%s" and display name "%s" was found.'
@@ -25,4 +28,4 @@ def main(key_file, application_name):
 
 
 if __name__ == '__main__':
-    main(KEY_FILE, APPLICATION_NAME)
+    main()

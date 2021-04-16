@@ -1,0 +1,5 @@
+# AdManagerClient configurations
+ad_manager:
+  application_name: INSERT_APPLICATION_NAME_HERE
+  network_code: INSERT_NETWORK_CODE_HERE
+  path_to_private_key_file: ../credential.json
