@@ -2,6 +2,8 @@ from googleads import ad_manager, AdManagerClient
 import os
 
 # 認証ファイルのpathを取得
+from googleads.errors import GoogleAdsServerFault
+
 script_dir = os.path.dirname(__file__)
 CONFIG_FILE = os.path.join(script_dir, 'googleads.yaml')
 
@@ -11,7 +13,7 @@ def main():
 
     get_all_networks(ad_manager_client)
     get_current_user(ad_manager_client)
-    get_all_advertiser(ad_manager_client)
+    get_all_companies(ad_manager_client)
 
 
 def get_current_user(ad_manager_client: AdManagerClient):
@@ -43,6 +45,27 @@ def get_all_companies(ad_manager_client: AdManagerClient):
         for company in response['results']:
             print('Company with ID "%d", name "%s", and type "%s" was found.\n' %
                   (company['id'], company['name'], company['type']))
+
+
+# 広告主を追加する
+def add_advertiser(ad_manager_client: AdManagerClient):
+    try:
+        company_service = ad_manager_client.GetService('CompanyService')
+        # 追加するサンプル
+        companies = [
+            {
+                'name': 'Advertiser by API',
+                'type': 'ADVERTISER'
+            }
+        ]
+        companies = company_service.createCompanies(companies)
+        for company in companies:
+            print('Company with ID "%d", name "%s", and type "%s" was found.\n' %
+                  (company['id'], company['name'], company['type']))
+    except GoogleAdsServerFault as e:
+        # TODO すでに存在していた場合のエラー処理
+        print(e)
+        print('already exists.')
 
 
 if __name__ == '__main__':
