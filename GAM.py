@@ -11,6 +11,7 @@ def main():
 
     get_all_networks(ad_manager_client)
     get_current_user(ad_manager_client)
+    get_all_advertiser(ad_manager_client)
 
 
 def get_current_user(ad_manager_client: AdManagerClient):
@@ -25,6 +26,23 @@ def get_all_networks(ad_manager_client: AdManagerClient):
     for network in networks:
         print('Network with network code "%s" and display name "%s" was found.'
               % (network['networkCode'], network['displayName']))
+
+
+def get_all_companies(ad_manager_client: AdManagerClient):
+    company_service = ad_manager_client.GetService('CompanyService')
+
+    # 何も指定せず会社をすべて取得する
+    statement = ad_manager.StatementBuilder()
+
+    # 広告主・自社広告主を取得する場合のStatement
+    # statement = ad_manager.StatementBuilder()\
+    #     .Where('type IN (\'ADVERTISER\' , \'HOUSE_ADVERTISER\')')
+
+    response = company_service.getCompaniesByStatement(statement.ToStatement())
+    if 'results' in response and len(response['results']):
+        for company in response['results']:
+            print('Company with ID "%d", name "%s", and type "%s" was found.\n' %
+                  (company['id'], company['name'], company['type']))
 
 
 if __name__ == '__main__':
