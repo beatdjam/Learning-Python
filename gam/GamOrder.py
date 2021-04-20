@@ -22,7 +22,7 @@ class GamOrder:
                 break
 
     # オーダーを作成する
-    def add_order(self, advertiser_id: int, trafficker_id: int):
+    def create_order(self, advertiser_id: int, trafficker_id: int):
         orders = [{
             'name': 'Order #%s' % uuid.uuid4(),
             'advertiserId': advertiser_id,
