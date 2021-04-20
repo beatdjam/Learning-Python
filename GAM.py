@@ -1,3 +1,5 @@
+import uuid
+
 from googleads import ad_manager, AdManagerClient
 import os
 
@@ -15,6 +17,7 @@ def main():
     get_current_user(ad_manager_client)
     get_all_companies(ad_manager_client)
     get_all_orders(ad_manager_client)
+    add_advertiser(ad_manager_client)
 
 
 def get_current_user(ad_manager_client: AdManagerClient):
@@ -89,6 +92,25 @@ def get_all_orders(client: AdManagerClient):
             statement.offset += statement.limit
         else:
             break
+
+
+# オーダーを作成する
+def add_order(client: AdManagerClient, advertiser_id: int, trafficker_id: int):
+    service = client.GetService('OrderService')
+
+    orders = []
+    for _ in range(1):
+        order = {
+            'name': 'Order #%s' % uuid.uuid4(),
+            'advertiserId': advertiser_id,
+            'traffickerId': trafficker_id
+        }
+        orders.append(order)
+
+    orders = service.createOrders(orders)
+    for order in orders:
+        print('Order with id "%s" and name "%s" was created.'
+              % (order['id'], order['name']))
 
 
 if __name__ == '__main__':
