@@ -14,6 +14,7 @@ def main():
     get_all_networks(ad_manager_client)
     get_current_user(ad_manager_client)
     get_all_companies(ad_manager_client)
+    get_all_orders(ad_manager_client)
 
 
 def get_current_user(ad_manager_client: AdManagerClient):
@@ -66,6 +67,20 @@ def add_advertiser(ad_manager_client: AdManagerClient):
         # TODO すでに存在していた場合のエラー処理
         print(e)
         print('already exists.')
+
+
+# アーカイブされていないオーダーを取得する
+def get_all_orders(client: AdManagerClient):
+    service = client.GetService('OrderService')
+    statement = ad_manager.StatementBuilder().Where('isArchived = FALSE')
+    while True:
+        response = service.getOrdersByStatement(statement.ToStatement())
+        if 'results' in response and len(response['results']):
+            for order in response['results']:
+                print('Order with ID "%d" and name "%s" was found.\n' % (order['id'],
+                                                                         order['name']))
+        # 全件読み込むためにlimitにoffsetを足してループ
+        statement.offset += statement.limit
 
 
 if __name__ == '__main__':
