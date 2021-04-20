@@ -41,11 +41,17 @@ def get_all_companies(ad_manager_client: AdManagerClient):
     # statement = ad_manager.StatementBuilder()\
     #     .Where('type IN (\'ADVERTISER\' , \'HOUSE_ADVERTISER\')')
 
-    response = company_service.getCompaniesByStatement(statement.ToStatement())
-    if 'results' in response and len(response['results']):
-        for company in response['results']:
-            print('Company with ID "%d", name "%s", and type "%s" was found.\n' %
-                  (company['id'], company['name'], company['type']))
+    while True:
+        response = company_service.getCompaniesByStatement(statement.ToStatement())
+        if 'results' in response and len(response['results']):
+            for company in response['results']:
+                print('Company with ID "%d", name "%s", and type "%s" was found.\n' %
+                      (company['id'], company['name'], company['type']))
+            statement.offset += statement.limit
+        else:
+            break
+
+    print('\nNumber of results found: %s' % response['totalResultSetSize'])
 
 
 # 広告主を追加する
@@ -79,8 +85,10 @@ def get_all_orders(client: AdManagerClient):
             for order in response['results']:
                 print('Order with ID "%d" and name "%s" was found.\n' % (order['id'],
                                                                          order['name']))
-        # 全件読み込むためにlimitにoffsetを足してループ
-        statement.offset += statement.limit
+            # 全件読み込むためにlimitにoffsetを足してループ
+            statement.offset += statement.limit
+        else:
+            break
 
 
 if __name__ == '__main__':
