@@ -3,6 +3,7 @@ import os
 
 # 認証ファイルのpathを取得
 from gam.GamCompany import GamCompany
+from gam.GamLineItem import GamLineItem
 from gam.GamNetwork import GamNetwork
 from gam.GamOrder import GamOrder
 from gam.GamUser import GamUser
@@ -21,7 +22,11 @@ def main():
     company.create_advertiser('Advertiser by API')
     order = GamOrder(ad_manager_client)
     order.get_all_orders()
+    line_item = GamLineItem(ad_manager_client)
+    line_item.get_all_line_items()
 
 
 if __name__ == '__main__':
     main()
+
+
