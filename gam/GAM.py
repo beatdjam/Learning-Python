@@ -9,7 +9,7 @@ from gam.GamOrder import GamOrder
 from gam.GamUser import GamUser
 
 script_dir = os.path.dirname(__file__)
-CONFIG_FILE = os.path.join(script_dir, 'googleads.yaml')
+CONFIG_FILE = os.path.join(script_dir, '../googleads.yaml')
 
 
 def main():
