@@ -1,11 +1,13 @@
 import uuid
 
-from googleads import AdManagerClient, ad_manager
+from googleads import ad_manager
+
+from gam.GoogleAdManagerClient import GoogleAdManagerClient
 
 
 class GamOrder:
-    def __init__(self, client: AdManagerClient):
-        self.__service = client.GetService('OrderService')
+    def __init__(self):
+        self.__service = GoogleAdManagerClient().GetService('OrderService')
 
     # アーカイブされていないオーダーを取得する
     def get_all_orders(self):

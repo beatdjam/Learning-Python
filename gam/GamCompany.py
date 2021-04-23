@@ -1,10 +1,12 @@
-from googleads import AdManagerClient, ad_manager
+from googleads import ad_manager
 from googleads.errors import GoogleAdsServerFault
+
+from gam.GoogleAdManagerClient import GoogleAdManagerClient
 
 
 class GamCompany:
-    def __init__(self, client: AdManagerClient):
-        self.__service = client.GetService('CompanyService')
+    def __init__(self):
+        self.__service = GoogleAdManagerClient().GetService('CompanyService')
 
     def get_all_companies(self):
         # 何も指定せず会社をすべて取得する
@@ -28,7 +30,8 @@ class GamCompany:
 
     def create_advertiser(self, company_name: str):
         try:
-            companies = self.__service.createCompanies([{'name': company_name, 'type': 'ADVERTISER'}])
+            companies = self.__service.createCompanies(
+                [{'name': company_name, 'type': 'ADVERTISER'}])
             for company in companies:
                 print('Company with ID "%d", name "%s", and type "%s" was found.\n' %
                       (company['id'], company['name'], company['type']))

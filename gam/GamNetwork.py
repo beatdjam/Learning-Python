@@ -1,10 +1,10 @@
-from googleads import AdManagerClient
+from gam.GoogleAdManagerClient import GoogleAdManagerClient
 
 
 class GamNetwork:
 
-    def __init__(self, client: AdManagerClient):
-        self.__service = client.GetService('NetworkService')
+    def __init__(self):
+        self.__service = GoogleAdManagerClient().GetService('NetworkService')
 
     def get_all_networks(self):
         networks = self.__service.getAllNetworks()

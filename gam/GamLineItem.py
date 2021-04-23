@@ -1,9 +1,11 @@
-from googleads import AdManagerClient, ad_manager
+from googleads import ad_manager
+
+from gam.GoogleAdManagerClient import GoogleAdManagerClient
 
 
 class GamLineItem:
-    def __init__(self, client: AdManagerClient):
-        self.__service = client.GetService('LineItemService')
+    def __init__(self):
+        self.__service = GoogleAdManagerClient().GetService('LineItemService')
 
     def get_all_line_items(self):
         statement = ad_manager.StatementBuilder()

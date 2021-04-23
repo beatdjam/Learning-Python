@@ -1,10 +1,10 @@
-from googleads import AdManagerClient
+from gam.GoogleAdManagerClient import GoogleAdManagerClient
 
 
 class GamUser:
 
-    def __init__(self, client: AdManagerClient):
-        self.__service = client.GetService('UserService')
+    def __init__(self):
+        self.__service = GoogleAdManagerClient().GetService('UserService')
 
     def get_current_user(self):
         user = self.__service.getCurrentUser()
