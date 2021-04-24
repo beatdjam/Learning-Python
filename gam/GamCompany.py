@@ -16,25 +16,22 @@ class GamCompany:
         # statement = ad_manager.StatementBuilder()\
         #     .Where('type IN (\'ADVERTISER\' , \'HOUSE_ADVERTISER\')')
 
+        result = []
         while True:
             response = self.__service.getCompaniesByStatement(statement.ToStatement())
+            result = []
             if 'results' in response and len(response['results']):
-                for company in response['results']:
-                    print('Company with ID "%d", name "%s", and type "%s" was found.\n' %
-                          (company['id'], company['name'], company['type']))
+                result.append(response['results'])
                 statement.offset += statement.limit
             else:
                 break
 
-        print('\nNumber of results found: %s' % response['totalResultSetSize'])
+        return result
 
     def create_advertiser(self, company_name: str):
         try:
-            companies = self.__service.createCompanies(
+            return self.__service.createCompanies(
                 [{'name': company_name, 'type': 'ADVERTISER'}])
-            for company in companies:
-                print('Company with ID "%d", name "%s", and type "%s" was found.\n' %
-                      (company['id'], company['name'], company['type']))
         except GoogleAdsServerFault as e:
             # TODO すでに存在していた場合のエラー処理
             print(e)
