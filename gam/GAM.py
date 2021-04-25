@@ -24,14 +24,25 @@ def main():
     print('\nNumber of results found: %s' % len(companies))
 
     created_companies = company_service.create_advertiser('Advertiser by API')
-    for company in created_companies:
-        print('Company with ID "%d", name "%s", and type "%s" was found.\n' %
-              (company['id'], company['name'], company['type']))
-        
+    if created_companies is not None:
+        for company in created_companies:
+            print('Company with ID "%d", name "%s", and type "%s" was found.\n' %
+                  (company['id'], company['name'], company['type']))
+
     order_service = GamOrder()
-    order_service.get_all_orders()
+    orders = order_service.get_all_orders()
+    for order in orders:
+        print('Order with ID "%d" and name "%s" was found.\n' % (order['id'],
+                                                                 order['name']))
     line_item = GamLineItem()
-    line_item.get_all_line_items()
+    line_items = line_item.get_all_line_items()
+    for line_item in line_items:
+        # Print out some information for each line item.
+        print(line_item)
+        print('Line item with ID "%d" and name "%s" was found.\n' %
+              (line_item['id'], line_item['name']))
+
+    print('\nNumber of results found: %s' % len(line_items))
 
 
 if __name__ == '__main__':

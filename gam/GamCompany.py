@@ -19,9 +19,8 @@ class GamCompany:
         result = []
         while True:
             response = self.__service.getCompaniesByStatement(statement.ToStatement())
-            result = []
             if 'results' in response and len(response['results']):
-                result.append(response['results'])
+                result += response['results']
                 statement.offset += statement.limit
             else:
                 break

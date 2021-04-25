@@ -12,16 +12,17 @@ class GamOrder:
     # アーカイブされていないオーダーを取得する
     def get_all_orders(self):
         statement = ad_manager.StatementBuilder().Where('isArchived = FALSE')
+        result = []
         while True:
             response = self.__service.getOrdersByStatement(statement.ToStatement())
             if 'results' in response and len(response['results']):
-                for order in response['results']:
-                    print('Order with ID "%d" and name "%s" was found.\n' % (order['id'],
-                                                                             order['name']))
                 # 全件読み込むためにlimitにoffsetを足してループ
+                result += response['results']
                 statement.offset += statement.limit
             else:
                 break
+
+        return result
 
     # オーダーを作成する
     def create_order(self, advertiser_id: int, trafficker_id: int):
