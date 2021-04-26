@@ -1,5 +1,6 @@
 # Declare a Web Service
 import responder
+
 from router.SampleRouter import Sample
 
 api = responder.API()
@@ -76,6 +77,12 @@ class Class:
     @staticmethod
     async def on_request(req, resp, *, who):
         resp.text = f"Any, {who}!"
+
+
+# クエリパラメータの取得
+@api.route('/param')
+def param_sample(req, resp):
+    print(req.params)
 
 
 # 別ファイルのClassでルーティング
