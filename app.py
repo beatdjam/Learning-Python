@@ -1,9 +1,13 @@
 # Declare a Web Service
 import responder
+from marshmallow import Schema, fields
 
 from router.SampleRouter import Sample
 
-api = responder.API()
+api = responder.API(
+    openapi='3.0.0',
+    docs_route='/docs',
+)
 
 
 # Hello World!
@@ -83,6 +87,33 @@ class Class:
 @api.route('/param')
 def param_sample(req, resp):
     print(req.params)
+
+
+@api.route('/schema')
+class SchemaRouter:
+    """Swagger出力サンプル
+    ---
+    name: Sample
+    get:
+        description: Sample
+        responses:
+            200:
+                description: All exist_id to be returned
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/SampleSchema"
+    """
+
+    @staticmethod
+    async def on_get(req, resp):
+        resp.media = SampleSchema().dump({"user_id": 1, "user_name": "hogetaro"})
+
+
+@api.schema("SampleSchema")
+class SampleSchema(Schema):
+    user_id = fields.Integer()
+    user_name = fields.Str()
 
 
 # 別ファイルのClassでルーティング
