@@ -1,8 +1,8 @@
 # Declare a Web Service
 import responder
-from marshmallow import Schema, fields
 
 from router.SampleRouter import Sample
+from router.SchemaRouter import SchemaRouter, SampleSchema
 
 api = responder.API(
     openapi='3.0.0',
@@ -89,35 +89,11 @@ def param_sample(req, resp):
     print(req.params)
 
 
-@api.route('/schema')
-class SchemaRouter:
-    """Swagger出力サンプル
-    ---
-    name: Sample
-    get:
-        description: Sample
-        responses:
-            200:
-                description: All exist_id to be returned
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/SampleSchema"
-    """
-
-    @staticmethod
-    async def on_get(req, resp):
-        resp.media = SampleSchema().dump({"user_id": 1, "user_name": "hogetaro"})
-
-
-@api.schema("SampleSchema")
-class SampleSchema(Schema):
-    user_id = fields.Integer()
-    user_name = fields.Str()
-
-
 # 別ファイルのClassでルーティング
 api.add_route("/sample", Sample)
+api.add_route('/schema', SchemaRouter)
+
+api.schema("SampleSchema")(SampleSchema)
 
 # Run the Server
 if __name__ == '__main__':
