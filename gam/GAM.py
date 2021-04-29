@@ -37,7 +37,6 @@ def main():
     line_item = GamLineItem()
     line_items = line_item.get_all_line_items()
     for line_item in line_items:
-        # Print out some information for each line item.
         print(line_item)
         print('Line item with ID "%d" and name "%s" was found.\n' %
               (line_item['id'], line_item['name']))
