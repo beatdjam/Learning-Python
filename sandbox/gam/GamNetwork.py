@@ -1,4 +1,4 @@
-from gam.GoogleAdManagerClient import GoogleAdManagerClient
+from sandbox.gam.GoogleAdManagerClient import GoogleAdManagerClient
 
 
 class GamNetwork:

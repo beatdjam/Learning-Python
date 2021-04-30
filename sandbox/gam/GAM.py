@@ -1,9 +1,9 @@
 # 認証ファイルのpathを取得
-from gam.GamCompany import GamCompany
-from gam.GamLineItem import GamLineItem
-from gam.GamNetwork import GamNetwork
-from gam.GamOrder import GamOrder
-from gam.GamUser import GamUser
+from sandbox.gam.GamCompany import GamCompany
+from sandbox.gam.GamLineItem import GamLineItem
+from sandbox.gam.GamNetwork import GamNetwork
+from sandbox.gam.GamOrder import GamOrder
+from sandbox.gam.GamUser import GamUser
 
 
 def main():

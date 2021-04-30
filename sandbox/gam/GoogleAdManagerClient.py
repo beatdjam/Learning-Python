@@ -3,7 +3,7 @@ import os
 from googleads import ad_manager
 
 script_dir = os.path.dirname(__file__)
-CONFIG_FILE = os.path.join(script_dir, '../googleads.yaml')
+CONFIG_FILE = os.path.join(script_dir, '../../googleads.yaml')
 
 
 class GoogleAdManagerClient:

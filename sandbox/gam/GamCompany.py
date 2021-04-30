@@ -1,7 +1,7 @@
 from googleads import ad_manager
 from googleads.errors import GoogleAdsServerFault
 
-from gam.GoogleAdManagerClient import GoogleAdManagerClient
+from sandbox.gam.GoogleAdManagerClient import GoogleAdManagerClient
 
 
 class GamCompany:
