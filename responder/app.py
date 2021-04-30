@@ -1,8 +1,9 @@
 # Declare a Web Service
 import responder
 
+from router import SchemaRouter
 from router.SampleRouter import Sample
-from router.SchemaRouter import SchemaRouter, SampleSchema
+from router.SchemaRouter import SampleSchema
 
 api = responder.API(
     openapi='3.0.0',
